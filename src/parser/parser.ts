@@ -372,7 +372,7 @@ export class Parser {
         let middle = this.ternaryIfExpression(expression);
         
         this.consumeAndMatch(TokenType.Else);
-        let right = this.expression(expression);
+        let right = this.ternaryIfExpression(expression);
 
         left.parent = expression;
         expression.test = left;
@@ -390,7 +390,7 @@ export class Parser {
 
         this.consumeAndMatch(TokenType.Or);
         const expression = new BinaryExpression(parent);
-        let right = this.expression(expression);
+        let right = this.andExpression(expression);
 
         left.parent = expression;
         expression.left = left;
@@ -407,7 +407,7 @@ export class Parser {
 
         this.consumeAndMatch(TokenType.And);
         const expression = new BinaryExpression(parent);
-        let right = this.expression(expression);
+        let right = this.notExpression(expression);
 
         left.parent = expression;
         expression.left = left;
@@ -423,7 +423,7 @@ export class Parser {
 
         this.consumeAndMatch(TokenType.Not);
         const expression = new UnaryExpression(parent);
-        let arg = this.expression(expression);
+        let arg = this.compareExpression(expression);
         expression.argument = arg;
         expression.operator = Operator.Not;
         return expression;
@@ -437,7 +437,7 @@ export class Parser {
 
         const operator = this.consume().type;
         const expression = new BinaryExpression(parent);
-        let right = this.expression(expression);
+        let right = this.compareExpression(expression);
         left.parent = expression
         expression.operator = tokenToOperator(operator);
         expression.right = right;
@@ -453,7 +453,7 @@ export class Parser {
 
         const operator = this.consume().type;
         const expression = new BinaryExpression(parent);
-        let right = this.expression(expression);
+        let right = this.additionalExpression(expression);
 
         left.parent = expression;
         expression.left = left;
@@ -471,7 +471,7 @@ export class Parser {
 
         const operator = this.consume().type;
         const expression = new BinaryExpression(parent);
-        let right = this.expression(expression);
+        let right = this.multiplyExpression(expression);
 
         left.parent = expression;
         expression.left = left;
@@ -485,10 +485,10 @@ export class Parser {
             return this.memberOrIndexOrFunctionCallExpression(parent);
         }
 
-        this.consumeAndMatch(TokenType.Not);
+        this.consumeAndMatch(TokenType.Minus);
         const expression = new UnaryExpression(parent);
 
-        let arg = this.expression(expression);
+        let arg = this.unaryExpression(expression);
         expression.argument = arg;
         expression.operator = Operator.Minus;
         return expression;
@@ -580,7 +580,7 @@ export class Parser {
             this.consume();
             return new Identifier(parent, token.value);
         }
-
+        console.log(token);
         throw new ParserError("Expected identifier, literal, list literal, or `(`expression`),\n Or the following keywords are not supported: import, from, try, raise, finally, yield, with, async, await, as, assert, lambda", token.position);
     }
 
