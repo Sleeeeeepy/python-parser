@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "ES2022",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "paths": {
+          "@src/*": ["src/*"],
+          "@parser/*": ["src/parser/*"],
+          "@exceptions/*": ["src/exceptions/*"],
+          "@interface/*": ["src/interface/*"],
+          "@utils/*": ["src/utils"]
+      }
+  },
+  "include": [
+      "src/**/*",
+      "__tests__/**/*"
+  ],
+  "exclude": [".vscode/**/*"]
+}
