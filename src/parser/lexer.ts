@@ -28,7 +28,7 @@ export class Lexer {
         [TokenType.Colon, new RegExp("^:")],
         [TokenType.Dot, new RegExp("^\\.")],
         [TokenType.Comment, new RegExp("^#.+")],
-        [TokenType.String, new RegExp(String.raw`^"([ -!#-[\]-~]|\\|\\\\|\\t|\\n")*"`)],
+        [TokenType.String, new RegExp(String.raw`^"([ -!#-[\]-~]|\\|\\\\|\\t|\\n")*"|^'([ -!#-[\]-~]|\\|\\\\|\\t|\\n")*'`)],
         [TokenType.ID, new RegExp("^[a-zA-Z_][a-zA-Z0-9_]*")],
         [TokenType.Integer, new RegExp("^0|^([1-9][0-9]*)")]
     ]);
