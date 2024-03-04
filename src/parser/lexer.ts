@@ -69,7 +69,10 @@ export class Lexer {
             let lineTokens = this.tokenizeLine(lines[i]);
             this.position.row++;
             this.position.column = 0;
-            tokens.push(...indent, ...lineTokens, Token.fromPosition(TokenType.NewLine, this.position, "\n"));
+            tokens.push(...indent, ...lineTokens);
+            if (lineTokens.length !== 0) {
+                tokens.push(Token.fromPosition(TokenType.NewLine, this.position, "\n"));
+            }
         }
         const lastLine = lines[lines.length - 1];
         let indent = this.matchIndentation(lastLine);
@@ -136,31 +139,31 @@ export class Lexer {
     
     private matchIndentation(line: string) {
         let tokens = new Array<Token>();
+        if (line.length === 0) {
+            return tokens;
+        }
+
         let indentMatch = Lexer.regexMap.get(TokenType.Indent)?.exec(line);
         if (indentMatch) {
             this.position.column = 0;
             this.addIndentation(tokens, Token.fromPosition(TokenType.Indent, this.position, indentMatch[0]));
             this.position.column += indentMatch.length;
         } else {
-            if (this.indentationLevel > 0) {
-                this.addDedentation(tokens, 0);
-            }
+            this.addDedentation(tokens, 0);
         }
         return tokens;
     }
 
     private addDedentation(tokenArray: Array<Token>, level: number) {
-        if (this.indentationLevel > level) {
-            while (this.indentationLevel > level) {
-                let indent = this.indentationStack.pop();
-                if (!indent) {
-                    throw new IndentationError("Indentation Error", this.position);
-                }
-                tokenArray.push(Token.fromPosition(TokenType.Dedent, this.position, ""));
-                this.indentationLevel--;
+        while (this.indentationLevel > level) {
+            let indent = this.indentationStack.pop();
+            if (!indent) {
+                throw new IndentationError("Indentation Error", this.position);
             }
-            return;
+            tokenArray.push(Token.fromPosition(TokenType.Dedent, this.position, ""));
+            this.indentationLevel--;
         }
+        return;
     }
     
     private addIndentation(tokenArray: Array<Token>, token: Token) {

@@ -198,7 +198,7 @@ test("class", () => {
                      TokenType.Indent, TokenType.Def, TokenType.ID, TokenType.LeftParentheses, TokenType.ID, TokenType.Comma, TokenType.ID, TokenType.Comma, TokenType.ID, TokenType.RightParentheses, TokenType.Colon, TokenType.NewLine,
                      TokenType.Indent, TokenType.ID, TokenType.Dot, TokenType.ID, TokenType.Assign, TokenType.ID, TokenType.NewLine,
                      TokenType.ID, TokenType.Dot, TokenType.ID, TokenType.Assign, TokenType.ID, TokenType.NewLine,
-                     TokenType.Dedent, TokenType.NewLine, TokenType.Def, TokenType.ID, TokenType.LeftParentheses, TokenType.ID, TokenType.RightParentheses, TokenType.Colon, TokenType.NewLine,
+                     TokenType.Dedent, TokenType.Def, TokenType.ID, TokenType.LeftParentheses, TokenType.ID, TokenType.RightParentheses, TokenType.Colon, TokenType.NewLine,
                      TokenType.Indent, TokenType.ID, TokenType.LeftParentheses, TokenType.String, TokenType.Comma, TokenType.ID, TokenType.Dot, TokenType.ID, TokenType.Comma, TokenType.String, TokenType.Comma,
                      TokenType.ID, TokenType.Dot, TokenType.ID, TokenType.Comma, TokenType.String, TokenType.RightParentheses, TokenType.Dedent, TokenType.Dedent, TokenType.EOF];
         
