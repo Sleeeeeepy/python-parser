@@ -440,6 +440,7 @@ export class Parser {
         let right = this.compareExpression(expression);
         left.parent = expression
         expression.operator = tokenToOperator(operator);
+        expression.left = left;
         expression.right = right;
         return expression;
     }
@@ -580,7 +581,7 @@ export class Parser {
             this.consume();
             return new Identifier(parent, token.value);
         }
-        console.log(token);
+        
         throw new ParserError("Expected identifier, literal, list literal, or `(`expression`),\n Or the following keywords are not supported: import, from, try, raise, finally, yield, with, async, await, as, assert, lambda", token.position);
     }
 
